@@ -1,0 +1,13 @@
+Chunk:
+  overlap: 100
+  max_length: 600      # 对应 20% 的余地 (500 * 1.2)
+  chunk_size: 500
+  output_path: "data/chunk_database"
+  threshold: 0.2       # 新增：显式定义弹性比例
+
+LanceDB:
+  path: "data/vector_database"
+  table_name: "chunks"
+  top_k: 5
+  embedding_api: "http://127.0.0.1:8000/v1/embeddings" # 新增：远程模型 IP
+  vector_dim: 768      # 新增：向量维度
