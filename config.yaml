@@ -1,13 +1,25 @@
+DocumentParse:
+  vllm: False   # 默认不开启vllm推理加速
+  input_path: "data/raw"
+  output_path: "data/process"
+  auto_clean: "False"
+
 Chunk:
-  overlap: 100
+  overlap: 150
   max_length: 600      # 对应 20% 的余地 (500 * 1.2)
   chunk_size: 500
-  output_path: "data/chunk_database"
-  threshold: 0.2       # 新增：显式定义弹性比例
+  input_path: "data/process"
+  output_path: "data/chunk"
+  threshold: 0.2       # 切片上下文弹性比例
+  top_k: 3      # 关键字个数
 
 LanceDB:
-  path: "data/vector_database"
+  input_path: "data/chunk"
+  output_path: "data/vector_database"
   table_name: "chunks"
   top_k: 5
-  embedding_api: "http://127.0.0.1:8000/v1/embeddings" # 新增：远程模型 IP
   vector_dim: 768      # 新增：向量维度
+
+LLM:
+  temperature: 0.8
+  think: true

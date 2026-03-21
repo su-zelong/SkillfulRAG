@@ -1,0 +1,122 @@
+2026-03-21 16:10:58,876 - INFO - ---正在读取：data/raw 知识库下的pdf文件内容
+2026-03-21 16:10:58,879 - INFO - ---扫描完成，共发现 3 个pdf 文件可供解析
+2026-03-21 16:10:58,879 - INFO - ---正在解析第0个文档：AIOps-Survey2407
+2026-03-21 16:11:01,964 - INFO - ---正在将文件：data/chunk/AIOps-Survey2407.json 同步知识库
+2026-03-21 16:11:01,994 - ERROR - ---存入文档 AIOps-Survey2407 时发生错误：[Errno 2] No such file or directory: 'data/chunk/AIOps-Survey2407.json'，跳过处理
+2026-03-21 16:11:01,995 - INFO - ---正在解析第1个文档：Decor A degree Corrected FND-ACM-2023
+2026-03-21 16:11:03,655 - INFO - ---正在将文件：data/chunk/Decor A degree Corrected FND-ACM-2023.json 同步知识库
+2026-03-21 16:11:03,670 - ERROR - ---存入文档 Decor A degree Corrected FND-ACM-2023 时发生错误：[Errno 2] No such file or directory: 'data/chunk/Decor A degree Corrected FND-ACM-2023.json'，跳过处理
+2026-03-21 16:11:03,670 - INFO - ---正在解析第2个文档：HG-SL-AAAI-2023
+2026-03-21 16:11:05,193 - INFO - ---正在将文件：data/chunk/HG-SL-AAAI-2023.json 同步知识库
+2026-03-21 16:11:05,197 - ERROR - ---存入文档 HG-SL-AAAI-2023 时发生错误：[Errno 2] No such file or directory: 'data/chunk/HG-SL-AAAI-2023.json'，跳过处理
+2026-03-21 16:11:05,197 - INFO - ---所有文档解析完成！
+2026-03-21 16:12:11,752 - INFO - ---正在读取：data/raw 知识库下的pdf文件内容
+2026-03-21 16:12:11,754 - INFO - ---扫描完成，共发现 3 个pdf 文件可供解析
+2026-03-21 16:12:11,754 - INFO - ---正在解析第0个文档：AIOps-Survey2407
+2026-03-21 16:12:56,058 - INFO - ---正在将文件：data/chunk/AIOps-Survey2407.json 同步知识库
+2026-03-21 16:12:56,090 - ERROR - ---存入文档 AIOps-Survey2407 时发生错误：[Errno 2] No such file or directory: 'data/chunk/AIOps-Survey2407.json'，跳过处理
+2026-03-21 16:12:56,090 - INFO - ---正在解析第1个文档：Decor A degree Corrected FND-ACM-2023
+2026-03-21 16:13:36,810 - INFO - ---正在将文件：data/chunk/Decor A degree Corrected FND-ACM-2023.json 同步知识库
+2026-03-21 16:13:36,819 - ERROR - ---存入文档 Decor A degree Corrected FND-ACM-2023 时发生错误：[Errno 2] No such file or directory: 'data/chunk/Decor A degree Corrected FND-ACM-2023.json'，跳过处理
+2026-03-21 16:13:36,820 - INFO - ---正在解析第2个文档：HG-SL-AAAI-2023
+2026-03-21 16:19:50,779 - INFO - ---正在读取：data/raw 知识库下的pdf文件内容
+2026-03-21 16:19:50,782 - INFO - ---扫描完成，共发现 3 个pdf 文件可供解析
+2026-03-21 16:19:50,783 - INFO - ---正在解析第0个文档：AIOps-Survey2407
+2026-03-21 16:20:34,429 - DEBUG - Building prefix dict from the default dictionary ...
+2026-03-21 16:20:34,711 - DEBUG - Dumping model to file cache /tmp/jieba.cache
+2026-03-21 16:20:34,735 - DEBUG - Loading model cost 0.304 seconds.
+2026-03-21 16:20:34,736 - DEBUG - Prefix dict has been built successfully.
+2026-03-21 16:20:35,044 - INFO - ---正在将文件：data/chunk/AIOps-Survey2407.json 同步知识库
+2026-03-21 16:20:35,078 - ERROR - ---存入文档 AIOps-Survey2407 时发生错误：[Errno 2] No such file or directory: 'data/chunk/AIOps-Survey2407.json'，跳过处理
+2026-03-21 16:20:35,078 - INFO - ---正在解析第1个文档：Decor A degree Corrected FND-ACM-2023
+2026-03-21 16:35:49,281 - INFO - ---正在读取：data/raw 知识库下的pdf文件内容
+2026-03-21 16:35:49,284 - INFO - ---扫描完成，共发现 3 个pdf 文件可供解析
+2026-03-21 16:35:49,284 - INFO - ---正在解析第0个文档：AIOps-Survey2407
+2026-03-21 16:35:49,285 - INFO - ---data/process/AIOps-Survey2407.md已存在，跳过解析
+2026-03-21 16:35:49,286 - INFO - ---正在解析第1个文档：Decor A degree Corrected FND-ACM-2023
+2026-03-21 16:36:29,751 - ERROR - ---存入文档 Decor A degree Corrected FND-ACM-2023 时发生错误：local variable 'heading_stack' referenced before assignment，跳过处理
+2026-03-21 16:36:29,752 - INFO - ---正在解析第2个文档：HG-SL-AAAI-2023
+2026-03-21 16:57:51,906 - INFO - ---正在读取：data/raw 知识库下的pdf文件内容
+2026-03-21 16:57:51,910 - INFO - ---扫描完成，共发现 3 个pdf 文件可供解析
+2026-03-21 16:57:51,911 - INFO - ---正在解析第0个文档：AIOps-Survey2407
+2026-03-21 16:57:51,912 - INFO - ---data/process/AIOps-Survey2407.md已存在，跳过解析
+2026-03-21 16:57:51,912 - INFO - ---正在解析第1个文档：Decor A degree Corrected FND-ACM-2023
+2026-03-21 16:57:51,913 - INFO - ---data/process/Decor A degree Corrected FND-ACM-2023.md已存在，跳过解析
+2026-03-21 16:57:51,913 - INFO - ---正在解析第2个文档：HG-SL-AAAI-2023
+2026-03-21 16:58:35,019 - DEBUG - Building prefix dict from the default dictionary ...
+2026-03-21 16:58:35,028 - DEBUG - Loading model from cache /tmp/jieba.cache
+2026-03-21 16:58:35,336 - DEBUG - Loading model cost 0.316 seconds.
+2026-03-21 16:58:35,337 - DEBUG - Prefix dict has been built successfully.
+2026-03-21 16:58:35,607 - INFO - ---正在将文件：data/chunk/HG-SL-AAAI-2023.jsonl 同步知识库
+2026-03-21 16:58:35,647 - ERROR - ---存入文档 HG-SL-AAAI-2023 时发生错误：[Errno 2] No such file or directory: 'data/chunk/HG-SL-AAAI-2023.jsonl'，跳过处理
+2026-03-21 16:58:35,648 - INFO - ---所有文档解析完成！
+2026-03-21 17:00:46,513 - INFO - ---正在读取：data/raw 知识库下的pdf文件内容
+2026-03-21 17:00:46,516 - INFO - ---扫描完成，共发现 3 个pdf 文件可供解析
+2026-03-21 17:00:46,516 - INFO - ---正在解析第0个文档：AIOps-Survey2407
+2026-03-21 17:00:46,518 - INFO - ---data/process/AIOps-Survey2407.md已存在，跳过解析
+2026-03-21 17:00:46,519 - INFO - ---正在解析第1个文档：Decor A degree Corrected FND-ACM-2023
+2026-03-21 17:00:46,520 - INFO - ---data/process/Decor A degree Corrected FND-ACM-2023.md已存在，跳过解析
+2026-03-21 17:00:46,520 - INFO - ---正在解析第2个文档：HG-SL-AAAI-2023
+2026-03-21 17:01:28,387 - DEBUG - Building prefix dict from the default dictionary ...
+2026-03-21 17:01:28,390 - DEBUG - Loading model from cache /tmp/jieba.cache
+2026-03-21 17:01:28,709 - DEBUG - Loading model cost 0.321 seconds.
+2026-03-21 17:01:28,710 - DEBUG - Prefix dict has been built successfully.
+2026-03-21 17:01:28,986 - INFO - ---正在将文件：data/chunk/HG-SL-AAAI-2023.jsonl 同步知识库
+2026-03-21 17:01:29,028 - ERROR - ---存入文档 HG-SL-AAAI-2023 时发生错误：Extra data: line 2 column 1 (char 782)，跳过处理
+2026-03-21 17:01:29,029 - INFO - ---所有文档解析完成！
+2026-03-21 17:26:38,896 - INFO - ---正在读取：data/raw 知识库下的pdf文件内容
+2026-03-21 17:26:38,898 - INFO - ---扫描完成，共发现 3 个pdf 文件可供解析
+2026-03-21 17:26:38,898 - INFO - ---正在解析第0个文档：AIOps-Survey2407
+2026-03-21 17:27:25,368 - INFO - ---正在将文件：data/chunk/AIOps-Survey2407.jsonl 同步知识库
+2026-03-21 17:27:25,396 - ERROR - ---存入文档 AIOps-Survey2407 时发生错误：[Errno 2] No such file or directory: 'data/chunk/AIOps-Survey2407.jsonl'，跳过处理
+2026-03-21 17:27:25,397 - INFO - ---正在解析第1个文档：Decor A degree Corrected FND-ACM-2023
+2026-03-21 17:27:25,401 - INFO - ---data/process/Decor A degree Corrected FND-ACM-2023.md已存在，跳过解析
+2026-03-21 17:27:25,402 - INFO - ---正在解析第2个文档：HG-SL-AAAI-2023
+2026-03-21 17:27:25,403 - INFO - ---data/process/HG-SL-AAAI-2023.md已存在，跳过解析
+2026-03-21 17:27:25,403 - INFO - ---所有文档解析完成！
+2026-03-21 17:30:24,559 - INFO - ---正在读取：data/raw 知识库下的pdf文件内容
+2026-03-21 17:30:24,561 - INFO - ---扫描完成，共发现 3 个pdf 文件可供解析
+2026-03-21 17:30:24,562 - INFO - ---正在解析第0个文档：AIOps-Survey2407
+2026-03-21 17:31:12,938 - DEBUG - Building prefix dict from the default dictionary ...
+2026-03-21 17:31:12,940 - DEBUG - Loading model from cache /tmp/jieba.cache
+2026-03-21 17:31:13,245 - DEBUG - Loading model cost 0.306 seconds.
+2026-03-21 17:31:13,246 - DEBUG - Prefix dict has been built successfully.
+2026-03-21 17:31:13,794 - INFO - ---正在将文件：data/chunk/AIOps-Survey2407.jsonl 同步知识库
+2026-03-21 17:31:13,834 - ERROR - ---存入文档 AIOps-Survey2407 时发生错误：Extra data: line 2 column 1 (char 615)，跳过处理
+2026-03-21 17:31:13,835 - INFO - ---正在解析第1个文档：Decor A degree Corrected FND-ACM-2023
+2026-03-21 17:31:13,836 - INFO - ---data/process/Decor A degree Corrected FND-ACM-2023.md已存在，跳过解析
+2026-03-21 17:31:13,836 - INFO - ---正在解析第2个文档：HG-SL-AAAI-2023
+2026-03-21 17:31:13,837 - INFO - ---data/process/HG-SL-AAAI-2023.md已存在，跳过解析
+2026-03-21 17:31:13,838 - INFO - ---所有文档解析完成！
+2026-03-21 17:40:00,979 - INFO - ---正在读取：data/raw 知识库下的pdf文件内容
+2026-03-21 17:40:00,982 - INFO - ---扫描完成，共发现 3 个pdf 文件可供解析
+2026-03-21 17:40:00,983 - INFO - ---正在解析第0个文档：AIOps-Survey2407
+2026-03-21 17:40:00,984 - INFO - ---data/process/AIOps-Survey2407.md已存在，跳过解析
+2026-03-21 17:40:00,985 - INFO - ---正在解析第1个文档：Decor A degree Corrected FND-ACM-2023
+2026-03-21 17:40:43,533 - ERROR - ---存入文档 Decor A degree Corrected FND-ACM-2023 时发生错误：[Errno 21] Is a directory: 'data/process'，跳过处理
+2026-03-21 17:40:43,534 - INFO - ---正在解析第2个文档：HG-SL-AAAI-2023
+2026-03-21 17:40:43,536 - INFO - ---data/process/HG-SL-AAAI-2023.md已存在，跳过解析
+2026-03-21 17:40:43,537 - INFO - ---所有文档解析完成！
+2026-03-21 17:44:00,525 - INFO - ---正在读取：data/raw 知识库下的pdf文件内容
+2026-03-21 17:44:00,535 - INFO - ---扫描完成，共发现 3 个pdf 文件可供解析
+2026-03-21 17:44:00,536 - INFO - ---正在解析第0个文档：AIOps-Survey2407
+2026-03-21 17:44:00,537 - INFO - ---data/process/AIOps-Survey2407.md已存在，跳过解析
+2026-03-21 17:44:00,537 - INFO - ---正在解析第1个文档：Decor A degree Corrected FND-ACM-2023
+2026-03-21 17:44:00,538 - INFO - ---data/process/Decor A degree Corrected FND-ACM-2023.md已存在，跳过解析
+2026-03-21 17:44:00,539 - INFO - ---正在解析第2个文档：HG-SL-AAAI-2023
+2026-03-21 17:44:00,540 - INFO - ---data/process/HG-SL-AAAI-2023.md已存在，跳过解析
+2026-03-21 17:44:00,541 - INFO - ---所有文档解析完成！
+2026-03-21 17:44:19,454 - INFO - ---正在读取：data/raw 知识库下的pdf文件内容
+2026-03-21 17:44:19,456 - INFO - ---扫描完成，共发现 3 个pdf 文件可供解析
+2026-03-21 17:44:19,456 - INFO - ---正在解析第0个文档：AIOps-Survey2407
+2026-03-21 17:44:19,457 - INFO - ---data/process/AIOps-Survey2407.md已存在，跳过解析
+2026-03-21 17:44:19,457 - INFO - ---正在解析第1个文档：Decor A degree Corrected FND-ACM-2023
+2026-03-21 17:45:00,395 - DEBUG - Building prefix dict from the default dictionary ...
+2026-03-21 17:45:00,401 - DEBUG - Loading model from cache /tmp/jieba.cache
+2026-03-21 17:45:00,754 - DEBUG - Loading model cost 0.356 seconds.
+2026-03-21 17:45:00,754 - DEBUG - Prefix dict has been built successfully.
+2026-03-21 17:45:01,041 - INFO - ---正在将文件：data/chunk/Decor A degree Corrected FND-ACM-2023.jsonl 同步知识库
+2026-03-21 17:45:01,087 - ERROR - ---存入文档 Decor A degree Corrected FND-ACM-2023 时发生错误：Extra data: line 2 column 1 (char 553)，跳过处理
+2026-03-21 17:45:01,087 - INFO - ---正在解析第2个文档：HG-SL-AAAI-2023
+2026-03-21 17:45:01,088 - INFO - ---data/process/HG-SL-AAAI-2023.md已存在，跳过解析
+2026-03-21 17:45:01,088 - INFO - ---所有文档解析完成！
