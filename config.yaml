@@ -23,3 +23,7 @@ LanceDB:
 LLM:
   temperature: 0.8
   think: true
+
+Embedding:
+  input_path: "data/chunk"
+  dim: 768
