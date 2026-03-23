@@ -2,9 +2,9 @@ import os
 import sys
 from pathlib import Path
 
-from skills.DocParse_manager.script.doc_parser import parse_pdf
-from skills.Chunk_manager.script.chunk_process import chunk_text
-from skills.VectorDB_manager.script.vector_db_process import LanceDBManager
+from skills.DocParse_manager.script.docparse_manager import parse_pdf
+from skills.Chunk_manager.script.chunk_manager import chunk_text
+from skills.VectorDB_manager.script.vectordb_manager import LanceDBManager
 
 class RAGManager:
     def __init__(self, config_path="config.yaml"):

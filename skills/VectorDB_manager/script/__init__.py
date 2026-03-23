@@ -1,1 +1,1 @@
-from .vector_db_process import LanceDBManager
+from .vectordb_manager import LanceDBManager

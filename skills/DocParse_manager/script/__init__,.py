@@ -1,1 +1,1 @@
-from .doc_parser import parse_pdf
+from .docparse_manager import parse_pdf

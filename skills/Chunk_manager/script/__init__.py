@@ -1,1 +1,1 @@
-from .chunk_process import chunk_text
+from .chunk_manager import chunk_text

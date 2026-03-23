@@ -26,4 +26,10 @@ LLM:
 
 Embedding:
   input_path: "data/chunk"
+  output_path: "data/embedded"
   dim: 768
+  timeout: 30
+
+Rerank:
+  top_n: 5
+  threshold: 0.01

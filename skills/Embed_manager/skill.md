@@ -1,52 +1,52 @@
 ---
 name: Embed_Manager
-description: 语义向量化处理器。负责将非结构化文本、JSON 切片转化为高维向量，并提供维度校验与批量预处理功能。
+description: 语义向量化处理器。负责将 Chunk 转化为高维向量，管理 Embedding 资产的本地持久化与维度对齐。
 ---
 
 # 向量化管理器 (Embed_Manager)
 
 ## 概述 (Overview)
-Embed_Manager 是 SkillfulRAG 的核心计算组件。它负责对接远程或本地的 Embedding 模型（如 OpenAI v3, BGE 等），将 `Chunk_manager` 生成的文本块转换为 LanceDB 可识别的向量特征。它是连接“文字”与“语义空间”的桥梁。
+Embed_Manager 是 SkillfulRAG 知识图谱构建的关键。它通过调用 Embedding 模型将“原始文本”映射为“语义向量”，是实现向量检索（Vector Search）的前提。该组件不仅提供计算功能，还负责管理中间态的 `Embedded JSONL` 数据资产。
 
 ---
 
 ## 核心工作流 (Core Workflow)
 
-### 1. 资源探测与初始化 (Initialization)
-- **环境检查**：启动前必须确认环境变量 `EMBEDDING_API_KEY` 或 `config.yaml` 中的 `api_key` 已就绪。
-- **配置对齐**：
-    - **模型选择**：从 `Embedding.model` 读取（默认 `text-embedding-v3`）。
-    - **维度对齐**：读取 `Embedding.dim`（如 `768` 或 `1536`），确保输出向量与数据库表结构匹配。
-    - **输入路径**：默认监控 `data/chunk` 目录下的 `.jsonl` 文件。
+### 1. 自动配置寻踪 (Auto-Config)
+- **多级加载**：优先读取 `kwargs` 参数，其次检索 `config.yaml`，最后回退至 `os.getenv`。
+- **动态寻址**：自动扫描 `Embedding.input_path` (默认 `data/chunk`)，并确保 `Embedding.output_path` (默认 `data/embedded/<model_name>`) 存在，实现输入输出闭环。
 
-### 2. 执行向量化指令 (Action Engine)
-AI 根据用户意图调用 `/scripts/embed_ops.py`，调用规范如下：
+### 2. 执行指令集 (Instruction Set)
+AI Agent 应根据任务上下文选择最轻量的指令：
 
-| 意图 | 对应命令行指令 | 业务逻辑 |
+| 场景意图 | 对应命令行指令 | 核心逻辑 |
 | :--- | :--- | :--- |
-| **单句转化 (Embed)** | `python embed_ops.py --text "[内容]"` | 将单条文本转化为向量列表，用于实时搜索测试。 |
-| **批量预处理 (Batch)** | `python embed_ops.py batch --input [路径]` | 遍历目录，将所有 JSONL 文本批量转化为“文本+向量”格式。 |
-| **维度校验 (Check)** | `python embed_ops.py info` | 返回当前配置模型的向量维度，供数据库建表参考。 |
-| **数据清洗 (Clean)** | `python embed_ops.py format --file [路径]` | 清洗非法字符并确保输出的 JSON 格式符合 LanceDB 写入规范。 |
+| **单句检索测试** | `python embed_ops.py --text "[Content]"` | 快速转化用户查询，不产生持久化文件。 |
+| **离线全量构建** | `python embed_ops.py batch` | 遍历目录，将所有 Chunk 转化为“文本+向量”并存入 `data/embedded/<model_name>`。 |
+| **断点续传/同步** | `python embed_ops.py sync` | **[优化]** 对比输入输出目录，仅对新增或修改的 Chunk 进行增量 Embedding。 |
+| **数据库 Schema 参考**| `python embed_ops.py info` | 显式返回 `dim` 和 `model_name`，防止跨模型检索导致的语义错乱。 |
 
-### 3. 数据流闭环 (Data Loop)
-- **输入来源**：接收来自 `Chunk_manager` 切分后的结构化 JSON 数据或用户指定的文本。
-- **输出反馈**：
-    - 成功时：输出带有 `vector` 字段的增强型 JSON 数据，作为 `LanceDB_manager` 的输入。
-    - 失败时：反馈具体的 API 错误码或网络异常信息。
+### 3. 数据管线原则 (Pipeline Logic)
+- **解耦存储**：`Embed_Manager` 输出标准的 `.jsonl` 向量包。它可以被 `LanceDB_manager` 摄入，也可以作为独立资产迁移。
+- **流式写入**：为了处理大规模文档（如 SKE 源码库），必须采用 **Generator 模式** 边计算边写入本地，防止 OOM (内存溢出)。
 
 ---
 
-## 约束与原则 (Constraints)
+## 约束与增强原则 (Constraints & Best Practices)
 
-1. **配置隔离**：禁止在脚本中硬编码 API Key 或 URL，必须通过 `os.getenv` 或引导脚本读取 `config.yaml`。
-2. **职责单一**：`Embed_Manager` 只负责“计算向量”，不负责“存入数据库”。存储动作必须通过调用 `LanceDB_manager` 完成。
-3. **批量优先**：在处理 `data/chunk` 目录时，必须使用 Batch 模式以减少网络往返开销并节省 Token。
-4. **异常鲁棒性**：若远程 API 返回限流（Rate Limit），脚本应具备简单的指数退避（Exponential Backoff）重试机制。
+1. **原子性操作**：每条 Embedding 记录必须包含原始 `id` 和 `metadata`，确保在 LanceDB 中可追溯。
+2. **幂等性校验**：重复执行 `batch` 指令不应产生重复的 API 调用（建议通过 `content_hash` 校验）。
+3. **模型锁定**：严禁在同一张 LanceDB 表中混合不同模型的向量。执行前必须校验 `model_name` 是否一致。
+4. **异常重试策略**：
+    - **429 (Rate Limit)**：必须执行指数退避重试（Exponential Backoff）。
+    - **5xx (Server Error)**：记录失败的行号并跳过，确保整体任务不中断。
+5. **隐私合规**：在调用公网 API (如 OpenAI) 前，敏感数据（如密钥、公司内部 IP）应在 `Chunk_manager` 阶段完成脱敏。
 
 ---
 
-## 资源引用 (Resources)
-- **脚本**: `/scripts/embed_ops.py` (Embedding 逻辑实现)
-- **配置**: `config.yaml` (全局唯一参数来源，包含 `Embedding` 配置块)
-- **依赖**: `requests`, `pyyaml`, `json`
+## 资源与依赖 (Resources)
+- **主程序**: `/scripts/embed_ops.py` (内含 `EmbedManager` 类)
+- **数据资产**: 
+    - 输入：`data/chunk/*.jsonl`
+    - 输出：`data/embedded/<model_name>/*.jsonl` (由 `.gitignore` 保护)
+- **核心库**: `requests`, `pyyaml`, `lancedb` (用于 Schema 定义)
