@@ -4,6 +4,9 @@ import os
 import sys
 import requests
 from typing import Optional, List, Dict, Any, Generator
+from core.logger import get_logger
+
+logger = get_logger("Embed")
 
 def load_config(config_path: str = "config.yaml"):
     if not os.path.exists(config_path):
@@ -28,9 +31,9 @@ class EmbedManager:
         self.input_path = kwargs.get("input_path") or emb_cfg.get("input_path", "data/chunk")
         self.output_path = kwargs.get("output_path") or emb_cfg.get("output_path", f"data/embedded/{self.model_name}")
 
-        # 变量拼写修正：self.mode_name -> self.model_name
+        logger.info(f"📍[EmbedManager]: Embedding input path: {self.input_path}, output path: {self.output_path}, model: {self.model_name}")
         if not (self.url and self.api_key):
-            print(f"Error: API URL or Key missing!")
+            logger.error(f"[EmbedManager]: Embedding API URL or Embedding API Key missing!")
             sys.exit(1)
 
         # 确保输出目录存在
@@ -51,7 +54,7 @@ class EmbedManager:
             data = response.json().get("data", [])
             return data[0].get("embedding", []) if data else []
         except Exception as e:
-            print(f"Embedding API error: {e}")
+            logger.error(f"[EmbedManager]: Embedding API error: {e}")
             return []
 
     def _get_files(self) -> List[str]:
@@ -66,7 +69,7 @@ class EmbedManager:
         """
         files = self._get_files()
         for file_path in files:
-            print(f"Processing: {file_path}")
+            logger.info(f"Processing: {file_path}")
             with open(file_path, "r", encoding="utf-8") as f:
                 for line in f:
                     try:
@@ -78,7 +81,7 @@ class EmbedManager:
                                 item["vector"] = vector
                                 yield item
                     except Exception as e:
-                        print(f"Skip error line: {e}")
+                        logger.error(f"[EmbedManager]: Error processing line: {e}")
 
     def save_to_local(self, filename: str = "embedded_data.jsonl"):
         """
@@ -91,9 +94,9 @@ class EmbedManager:
                 f.write(json.dumps(item, ensure_ascii=False) + "\n")
                 count += 1
                 if count % 10 == 0:
-                    print(f"Saved {count} items to {full_path}")
+                    logger.info(f"[EmbedManager]: Saved {count} items to {full_path}")
         
-        print(f"✅ Success: All {count} items saved to {full_path}")
+        logger.info(f"[EmbedManager]: ✅ Success: All {count} items saved to {full_path}")
         return full_path
 
 # 使用示例
@@ -101,7 +104,7 @@ if __name__ == "__main__":
     manager = EmbedManager()
     
     # 场景 1：直接存到本地（推荐，防止断电丢失）
-    # manager.save_to_local("skill_base_v1.jsonl")
+    manager.save_to_local("skill_base_v1.jsonl")
     
     # 场景 2：流式同步到 LanceDB
     # for data_point in manager.process_generator():

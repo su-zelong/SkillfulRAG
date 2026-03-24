@@ -1,1 +1,1 @@
-from .chunk_manager import chunk_text
+from .chunk_manager import ChunkManager

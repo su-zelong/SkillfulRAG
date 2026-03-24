@@ -13,7 +13,7 @@ Chunk:
   threshold: 0.2       # 切片上下文弹性比例
   top_k: 3      # 关键字个数
 
-LanceDB:
+VectorDB:
   input_path: "data/chunk"
   output_path: "data/vector_database"
   table_name: "chunks"

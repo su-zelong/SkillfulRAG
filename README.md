@@ -1,116 +1,93 @@
-# 🚀 SkillfulRAG: A Semantic-Aware & Agentic RAG Engine
+-----
 
-[![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![VectorDB: LanceDB](https://img.shields.io/badge/VectorDB-LanceDB-green.svg)](https://lancedb.com/)
-[![Framework: MinerU](https://img.shields.io/badge/PDF_Parse-MinerU-orange.svg)](https://github.com/opendatalab/MinerU)
+# 🚀 SkillfulRAG: An Agentic & Semantic-Aware RAG Engine
 
-**SkillfulRAG** 是一个专为科研、复杂工业文档和代码仓库设计的端到端 RAG (Retrieval-Augmented Generation) 引擎。它拒绝“切碎”文档，而是通过 **“技能化 (Skill-based)”** 的架构，深度理解 Markdown 语法树 (AST)，并构建了一套包含 **混合检索 (Hybrid Search)** 与 **重排序 (Rerank)** 的工业级流水线。
+[](https://www.python.org/downloads/)
+[](https://lancedb.com/)
+[](https://www.langchain.com/langgraph)
 
-> **💡 核心理念**：不仅仅是存储，而是通过语义层级（Heading Stack）和高性能检索链路，为 AI Agent 提供具备“深度上下文”的精准知识颗粒。
+**SkillfulRAG** 不仅仅是一个 RAG 管道，它是一个具备**自主调度能力**的 AI Agent 框架。它通过深度理解 Markdown 语法树 (AST) 进行语义切片，并利用 **动态技能注册 (Skill Registry)** 机制，让 AI 能够根据用户指令自主规划“解析-切片-检索-生成”的完整链路。
 
----
+> **💡 核心进化**：从“固定的 Pipeline”转向“动态的 Dispatcher”。系统不再死板地执行步骤，而是由 Orchestrator 根据任务复杂度实时拆解并调用对应技能。
 
-## 🛠️ 核心功能 (Key Features)
+-----
 
-### 1. 📂 智能文档解析与结构化 (Smart Parsing)
-* **MinerU 深度集成**：完美还原学术论文/技术文档中的公式、表格与多栏布局。
-* **语义层级切片**：基于 `marko` 解析器，确保切片边界落在段落或标题处，每个 Chunk 自动继承 `Heading Stack`（例如：`[容器云 > SKE > 存储管理]`），极大提升检索召回精度。
-* **确定性数据指纹**：引入 **UUID5** 机制，基于文件名生成固定 ID，确保向量库在增量更新时不会出现重复文档。
+## 🛠️ 核心进化功能 (Key Features)
 
-### 2. ⚡ 高性能向量与混合检索 (Storage & Search)
-* **LanceDB 嵌入式驱动**：利用 Lance 格式实现毫秒级磁盘检索，原生支持 **向量 (Vector)** + **全文搜索 (FTS)** 混合模式，彻底解决专有名词（如错误码、Hash值）搜不到的痛点。
-* **流式向量化**：内置 `EmbedManager` 支持 Generator 模式，在处理大规模文档时保持极低的内存占用。
+### 1\. 🤖 自主调度大脑 (Agentic Orchestrator)
 
-### 3. 🎯 工业级检索流水线 (Retrieval Pipeline)
-* **语义重排序 (Rerank)**：集成 **BGE-Reranker-v2**，在初筛候选集中执行二次精排，有效过滤 90% 以上的检索噪音。
-* **上下文重组引擎**：自动将检索出的碎片整理为 LLM 易读的结构化 Context，并支持自动化来源引用（Citing）。
+  * **任务自动拆解**：基于 `LangGraph` 状态机，自动将模糊指令（如“处理这篇论文并入库”）拆解为有序的原子任务序列。
+  * **参数级联覆盖**：严格遵循 `Runtime Args > Environment Variables > config.yaml > Default` 的优先级。用户通过口语指定的参数（如“切片设为 500”）能实时覆盖全局配置。
 
-### 4. 🔌 AI-Native 技能架构 (Architecture)
-* **模块化 Manager 设计**：`Embed`、`Vector`、`Rerank`、`LLM` 四大管理器逻辑解耦，参数配置严格遵循 `Environment Variables > config.yaml > Default` 优先级，确保生产环境安全性。
+### 2\. 📂 语义感知切片 (Semantic-Aware Chunking)
 
----
+  * **Heading Stack 继承**：基于 `marko` 解析器，每个 Chunk 自动携带完整的标题路径（如：`容器云 > SKE > 存储`），为 LLM 提供极致的上下文锚点。
+  * **弹性边界提取**：结合 `jieba` 与正则引擎，自动为学术/工业文档提取高辨识度关键词与缩写（如 CNN, K8s），强化 FTS 全文搜索权重。
 
-## 🏗️ 项目结构 (Architecture)
+### 3\. 🔌 插件化技能架构 (Skill Registry)
+
+  * **即插即用 (PnP)**：只需在 `skills/` 下新建文件夹并编写 `skill.md`，Orchestrator 即可感知并学会使用新技能，无需修改核心代码。
+  * **数据总线 (Data Bus)**：通过 `Dispatcher` 实现任务间的数据透传，上一步的解析路径自动成为下一步的切片输入。
+
+-----
+
+## 🏗️ 项目架构 (Architecture)
 
 ```text
 .
-├── config.yaml          # ⚙️ 全局配置中心 (切片阈值、API URL、System Prompt)
-├── rag_engine.py        # 🧠 中枢神经 (Orchestrator: 串联所有组件)
-├── scripts/             # 🛠️ 执行动力室 (Managers)
-│   ├── embed_ops.py     # 向量计算与本地持久化
-│   ├── vector_ops.py    # LanceDB 混合检索逻辑
-│   ├── rerank_ops.py    # 语义打分与结果重组
-│   └── llm_ops.py       # LLM 适配器与 Prompt 注入
-├── skills/              # 📦 技能说明书 (Skill Manifests for Agents)
-│   ├── chunk_skill.md   # 切片算法与 AST 规范
-│   └── vector_skill.md  # 检索能力与字段描述
-└── data/                # 💾 数据流转层 (Raw -> Processed -> Embedded)
+├── core/                # 🧠 调度中枢 (The Brain)
+│   ├── agent_graph.py   # LangGraph 状态机定义
+│   ├── orchestrator.py  # 任务规划器 (Planner)
+│   ├── registry.py      # 技能注册中心 (Skill Registry)
+│   └── dispatcher.py    # 任务执行分发器 (Executor)
+├── skills/              # 📦 技能插件池 (The Muscles)
+│   ├── DocParse_manager/
+│   ├── Chunk_manager/   # 包含语义切片与 AST 逻辑
+│   └── VectorDB_manager/# LanceDB 混合检索实现
+├── config.yaml          # ⚙️ 全局配置 (默认切片、API 节点)
+└── data/                # 💾 数据流转 (Raw -> Processed -> Chunk)
 ```
 
----
+-----
 
 ## 🚦 快速开始 (Quick Start)
 
-### 1. 环境准备
-```bash
-# 克隆仓库
-git clone [https://github.com/SuZeLong/SkillfulRAG.git](https://github.com/SuZeLong/SkillfulRAG.git)
-cd SkillfulRAG
+### 1\. 环境准备
 
-# 安装核心依赖
+```bash
+git clone https://github.com/SuZeLong/SkillfulRAG.git
 pip install -r requirements.txt
+cp .env.example .env # 配置你的 API_KEY
 ```
 
-### 2. 配置环境变量
-```bash
-# 敏感 Key 建议通过环境导出，避免写入配置文件
-export LLM_API_KEY="sk-xxxx"
-export EMBEDDING_API_KEY="sk-xxxx"
-export RERANK_API_KEY="sk-xxxx"
-```
+### 2\. 启动 Agent 对话
 
-### 3. 运行对话引擎 (Pipeline)
 ```python
-from rag_engine import SkillfulRAGEngine
+# 运行主入口，体验自动调度
+python main.py
 
-# 1. 初始化引擎 (自动对齐 YAML 配置与环境变量)
-engine = SkillfulRAGEngine()
-
-# 2. 一键获取专业回答
-query = "SKE 1.8.6 的存储快照如何配置？"
-response = engine.run(query)
-
-print(f"🌟 AI Answer:\n{response}")
+# 👤 用户 > 帮我把 data/raw/ske.pdf 解析了，切片设为 600，存入 my_db
+# 📍 [节点进度]: planner 执行完毕
+# 🧠 AI 思考: 用户需要处理 PDF 并指定了切片大小，流程为 Parse -> Chunk -> VectorDB
+# 🚀 [Dispatcher]: 执行 Chunk_manager.chunk_text(size=600) ...
 ```
 
----
+-----
 
 ## 🧪 工程权衡 (Engineering Decisions)
 
-1. **为什么选择混合检索？**
-   在处理 Sangfor 内部代码和配置时，语义向量往往难以覆盖特定的哈希值或函数名。通过 **Vector + BM25 (FTS)**，我们实现了“模糊语义”与“精确匹配”的平衡。
-2. **为什么 Rerank 是必须的？**
-   单纯的向量相似度只代表“长得像”。在复杂的科研论文或技术文档中，Rerank (Cross-Encoder) 能识别出逻辑上的细微差别，显著降低 LLM 的幻觉率。
-3. **WSL2 兼容性优化**
-   针对 MinerU 运行时的显存分配问题，内置了显存探测逻辑，支持 `pipeline` 与 `vllm` 模式动态切换。
+1.  **为什么引入 Dispatcher？**
+    为了解决任务间的“硬编码”问题。通过 `internal_data` 状态总线，系统实现了文件路径的自动流转，极大地降低了各 Manager 之间的耦合度。
+2.  **为什么坚持 Markdown AST？**
+    纯文本切片会丢失层级关系。保留 `Heading Path` 让 Agent 在回答时能清晰地定位到“这在手册的哪个章节”，这对工业生产环境至关重要。
+3.  **LanceDB 的选型优势**
+    支持磁盘直接查询，无需启动复杂的数据库服务，极其适合单机环境及边缘侧部署（如 K8s 节点侧的 AIOps 助手）。
 
----
+-----
 
-## 📅 路线图 (Roadmap)
-
-- [x] 基于 MinerU 的 PDF 结构化解析 (MVP)
-- [x] 基于 Markdown AST 的语义弹性切片
-- [x] 基于 LanceDB 的向量/全文混合检索
-- [x] 集成重排序 (Rerank) 模块
-- [ ] 🚀 **多轮对话上下文 (Memory)**：支持基于会话历史的查询重写。
-- [ ] 📊 **评估系统 (RAGAS)**：增加检索准确率与回答质量的自动化打分。
-- [ ] 🤖 **Agentic Dispatcher**：由 Planner 自动决定是否需要调用外部工具补充知识。
-
----
-
-## 🤝 贡献
-如果你对 **Cloud-Native (K8s)**、**AIOps** 或 **医学图像处理** 感兴趣，欢迎提交 PR 或 Issue。
+## 🤝 贡献与联系
 
 **Author:** Su Zelong (szl)  
-**Affiliation:** Developed during research on Cloud-Native Infrastructure & Medical Image Segmentation.
+**Research:** Cloud-Native Infrastructure & Medical Image Segmentation.
+
+-----

@@ -3,6 +3,10 @@ import yaml
 import json
 import sys
 
+from core.logger import get_logger
+
+logger = get_logger("Retriever")
+
 def load_config(config_path: str = "config.yaml"):
     with open(config_path, "r", encoding="utf-8") as f: 
         return yaml.safe_load(f)

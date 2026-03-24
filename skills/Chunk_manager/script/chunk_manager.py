@@ -3,15 +3,16 @@ import yaml
 import re
 import json
 import uuid
-import logging
 import marko
 import jieba.analyse
 from pathlib import Path
 from typing import List, Dict, Any, Optional
 from marko.block import Heading
+import sys
+sys.path.insert(0, str(Path(__file__).parent.parent.parent.parent))
+from core.logger import get_logger
 
-# 获取项目统一 logger
-logger = logging.getLogger("SkillfulRAG.ChunkManager")
+logger = get_logger("Chunk")
 
 class ChunkManager:
     def __init__(self, config_path: str = "config.yaml", **kwargs):

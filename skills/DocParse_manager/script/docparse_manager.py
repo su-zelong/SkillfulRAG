@@ -2,12 +2,13 @@ import os
 import subprocess
 import yaml
 import shutil
-import logging
 from typing import Optional, Any
 from pathlib import Path
+import sys
+sys.path.insert(0, str(Path(__file__).parent.parent.parent.parent))
+from core.logger import get_logger
 
-# 接入项目统一的日志系统
-logger = logging.getLogger("SkillfulRAG.PDFSkill")
+logger = get_logger("DocParse")
 
 class DocParseManager:
     def __init__(self, config_path: str = "config.yaml"):
@@ -113,5 +114,5 @@ if __name__ == "__main__":
     args = parser.parse_args()
     
     # 示例：通过 kwargs 覆盖 config 中的 vllm 设置
-    pdf_mgr = PDFManager()
+    pdf_mgr = DocParseManager()
     pdf_mgr.parse(args.file, vllm=False)

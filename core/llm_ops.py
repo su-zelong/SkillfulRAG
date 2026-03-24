@@ -17,8 +17,8 @@ class LLMManager:
 
         # 2. 严格按优先级获取核心参数：环境变量 > 传入参数 > 配置文件
         # 敏感信息及模型名优先从环境获取
-        self.api_key = os.getenv("LLM_API_KEY") or kwargs.get("api_key") or llm_cfg.get("api_key")
-        self.url = os.getenv("LLM_API_URL") or kwargs.get("url") or llm_cfg.get("url")
+        self.api_key = os.getenv("LLM_API_KEY") or kwargs.get("api_key")
+        self.url = os.getenv("LLM_API_URL") or kwargs.get("url")
         self.model = os.getenv("LLM_MODEL_NAME") or kwargs.get("model") or llm_cfg.get("model", "gpt-3.5-turbo")
 
         # 3. 策略参数（Temperature等）从配置文件获取

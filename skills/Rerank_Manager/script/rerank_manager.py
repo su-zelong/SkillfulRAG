@@ -3,6 +3,9 @@ import json
 import yaml
 import requests
 from typing import List, Dict, Any, Optional
+from core.logger import get_logger
+
+logger = get_logger("Rerank")
 
 def load_config(config_path: str = "config.yaml"):
     if not os.path.exists(config_path):
@@ -24,7 +27,7 @@ class RerankManager:
         self.threshold = kwargs.get("threshold") or rr_cfg.get("threshold", 0.01)
 
         if not (self.url and self.api_key):
-            print("⚠️ Warning: Rerank API URL or Key is missing. Rerank will be bypassed.")
+            logger.warning("[ReRank]: ⚠️ Warning: Rerank API URL or Key is missing. Rerank will be bypassed.")
 
     def rerank(self, query: str, documents: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         """
@@ -71,7 +74,7 @@ class RerankManager:
             return reranked_results
 
         except Exception as e:
-            print(f"❌ Rerank API Error: {e}")
+            logger.error(f"[Rerank]: ❌ Rerank API Error: {e}")
             # 如果 Rerank 失败，作为降级方案，返回原始的前 N 个结果
             return documents[:self.top_n]
 
@@ -100,4 +103,4 @@ if __name__ == "__main__":
     
     manager = RerankManager()
     final_docs = manager.rerank(test_query, test_docs)
-    print(manager.format_context(final_docs))
+    logger.info(manager.format_context(final_docs))
